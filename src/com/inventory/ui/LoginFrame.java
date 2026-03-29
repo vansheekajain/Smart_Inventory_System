@@ -5,56 +5,63 @@ import java.awt.*;
 import com.inventory.controller.AuthController;
 
 public class LoginFrame extends JFrame {
+
     private JTextField usernameField;
     private JPasswordField passwordField;
 
     public LoginFrame() {
-        setTitle("Login");
-        setSize(350, 200);
+        setTitle("Smart Inventory Login");
+        setSize(400, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(new Color(245, 245, 245));
+        mainPanel.setLayout(new GridBagLayout());
 
-        panel.add(new JLabel("Username:"));
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(4, 1, 10, 10));
+        formPanel.setBackground(Color.WHITE);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JLabel title = new JLabel("Login", JLabel.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+
         usernameField = new JTextField();
-        panel.add(usernameField);
-
-        panel.add(new JLabel("Password:"));
         passwordField = new JPasswordField();
-        panel.add(passwordField);
 
         JButton loginBtn = new JButton("Login");
-        panel.add(new JLabel());
-        panel.add(loginBtn);
+        loginBtn.setBackground(new Color(0, 123, 255));
+        loginBtn.setForeground(Color.WHITE);
+        loginBtn.setFocusPainted(false);
 
-        add(panel);
+        formPanel.add(title);
+        formPanel.add(usernameField);
+        formPanel.add(passwordField);
+        formPanel.add(loginBtn);
 
-        loginBtn.addActionListener(e -> handleLogin());
+        mainPanel.add(formPanel);
+        add(mainPanel);
+
+        loginBtn.addActionListener(e -> login());
     }
 
-    private void handleLogin() {
+    private void login() {
         try {
             String username = usernameField.getText().trim();
-            String password = new String(passwordField.getPassword());
-
-            if (username.isEmpty() || password.isEmpty()) {
-                throw new Exception("Fields cannot be empty!");
-            }
+            String password = new String(passwordField.getPassword()).trim();
 
             AuthController controller = new AuthController();
-            boolean success = controller.login(username, password);
 
-            if (success) {
-                JOptionPane.showMessageDialog(this, "Login Successful!");
+            if (controller.login(username, password)) {
                 new DashboardFrame().setVisible(true);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Invalid credentials!");
+                JOptionPane.showMessageDialog(this, "Invalid Credentials");
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
 }
