@@ -209,7 +209,7 @@ Reports & Analytics
 |------------|-------------| 
 | Users      | Stores login credentials and user roles | 
 | Products   | Contains product details and stock levels | 
-| Suppliers  | Stores supplier information and contact details  
+| Suppliers  | Stores supplier information and contact details |
 | Orders     | Manages purchase orders linked to products and   suppliers | 
 | Shipments  | Tracks shipment details and delivery status | 
  
