@@ -1,0 +1,3 @@
+Main-Class: com.inventory.main.MainApp
+Class-Path: lib/mysql-connector-j.jar
+
